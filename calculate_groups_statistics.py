@@ -27,7 +27,7 @@ for group in groups_list:
 		for user_id in users_ids:
 			request = urlopen('https://api.vk.com/method/likes.isLiked?user_id=' + str(user_id) + '&' + 'type=post&owner_id=' + str(group) + '&item_id=' + str(post) + '&access_token=' + token)
 			data = eval(request.read())	
-			# if data ne empty.. to post_likes += 1
+			# if data (or data['liked'] == 1) ne empty.. to post_likes += 1
 
 		print(post_likes, file = file_of_posts_likes, end = '\n')		
 	
