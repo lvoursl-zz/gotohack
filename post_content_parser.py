@@ -3,6 +3,8 @@ import re
 groups_file = tuple(open('groups_list.txt', 'r+'))
 groups_list = [ ]
 
+delete = re.compile(u'\W+?', re.UNICODE)
+
 for group in groups_file:
 	groups_list.append(int(group.replace('\n', '')))
 
@@ -27,32 +29,14 @@ for group in groups_list:
 		#print(post_data_file.read().encode('windows-1251'))
 		#print(all_post_data)
 		try:
-			post_data_text = re.findall(r'\'text\':(.*?),', str(all_post_data))
+			post_data_text = re.findall(r'\'text\':(.*?),', str(all_post_data))			
 			post_data_text = str(post_data_text)
-			post_data_text = post_data_text.strip("[\"").strip("\"]")
-			post_data_text = post_data_text.strip(" \'\'")
-			#post_data_text = re.sub('[!@#$]', '', post_data_text)
-			#post_data_text = post_data_text.translate(None, " ?.!/;:")
-			post_data_text = post_data_text.strip("\'")
-			post_data_text = post_data_text.strip("\"")
-			post_data_text = post_data_text.strip(",")
-			post_data_text = post_data_text.strip("\\\\")
-			post_data_text = post_data_text.strip("\\")
-			post_data_text = post_data_text.strip("\\\\\\\\/")
-			post_data_text = post_data_text.strip("’")
-			post_data_text = post_data_text.strip("”")
-			post_data_text = post_data_text.strip("‘")
-			post_data_text = post_data_text.strip(".")
-			post_data_text = post_data_text.strip(":")
-			post_data_text = post_data_text.strip("<")
-			post_data_text = post_data_text.strip(">")
-			post_data_text = post_data_text.strip("" ''",")
-			post_data_text = post_data_text.strip(" " ''",")
-			post_data_text = post_data_text.strip("\" \'\'\",")
-			post_data_text = post_data_text.strip("‘")
-			post_data_text = post_data_text.strip("\xab")
 			post_data_text = post_data_text.replace("<br>", " ")
-			print(post_data_text)
+			
+			post_data_text = delete.sub(' ', post_data_text)
+
+			#print(re.sub(r'\s', '', post_data_text), end = "\n")
+			print(post_data_text.split())
 		except Exception as e:
 			print(e)
 			#pass
