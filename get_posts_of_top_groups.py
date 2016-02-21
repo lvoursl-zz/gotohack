@@ -12,6 +12,7 @@ clear_groups_list = [ ]
 for group in groups_list:
 	clear_groups_list.append(int(group.replace('\n', '')))
 
+
 for group in clear_groups_list:
 	out_file = open('groups_posts/' + str(group), 'w')
 
@@ -20,6 +21,7 @@ for group in clear_groups_list:
 
 	for i in range(1, len(data['response'])):
 	 	if data['response'][i]['id']:
-	 		print(data['response'][i]['id'], file = out_file, end='\n')
+	 		print(data['response'][i]['id'], file = out_file, end = '\n')
 
-			
+	
+	out_file.close()
