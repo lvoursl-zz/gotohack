@@ -1,13 +1,13 @@
 import json
 import nltk
+import re
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.snowball import RussianStemmer
 from nltk.tokenize import wordpunct_tokenize
 from collections import Counter
 
 stemmer = RussianStemmer()
-tokenizer = RegexpTokenizer(ur"[^\\ ,\\.\!\\?\\:\\)\(\\-\\0\\1\\\2\\3\\4\\5\\6\\7\\8\\9\\_\\?\\-\\?\\?]+")
-people_goal = db['users'].find({'first_name': 'Ваня'}).limit(50)
+people_goal = db['users'].find().limit(50)
 
 
 def killshit(text):
@@ -18,40 +18,38 @@ def killshit(text):
             ans += temp[i]
             ans += ' '
     return ans
-            
+
+delete = re.compile(u'\W+?', re.UNICODE)
 
 def get_bag_of_the_words(text):
     tokens = tokenizer.tokenize(text)
     tokens_stemmed = [stemmer.stem(token) for token in tokens]
     return Counter(tokens_stemmed)
 for p in people_goal:
-        #print (token)
         t = p['status']
         t += ' '
-        if 'about' in p:
+        if 'about' in p.keys():
             t += p['about']
         t += ' '
-        if 'interests' in p:
+        if 'interests' in p.keys():
             t += p['interests']
-        if 'books' in p:
+        if 'books' in p.keys():
             t += p['books']
         t += ' '
-        if 'tv' in p:
+        if 'tv' in p.keys():
             t += p['tv']
         t += ' '
-        if 'movies' in p:
+        if 'movies' in p.keys():
             t += p['movies']
         t += ' '
-        if 'games' in p:
+        if 'games' in p.keys():
             t += p['games']
         t += ' '
-        if 'quotes' in p:
+        if 'quotes' in p.keys():
             t += p['quotes']
         t += ' '
+        t = delete.sub(' ', t).strip()
         freq = get_bag_of_the_words(killshit(t))
-        for token, freq in freq.most_common():
+        for token, freq in freq.most_common()[:3]:
             print (token + "\t" + str(freq))
-        #print (stemmer.stem(token))
         print '------------'
-
-#print json.dumps(user[1345], indent=4, encoding='utf8', ensure_ascii=False)[:]
