@@ -7,14 +7,14 @@ from nltk.tokenize import wordpunct_tokenize
 from collections import Counter
 
 stemmer = RussianStemmer()
-people_goal = db['users'].find().limit(50)
+people_goal = db['users'].find({'sex': 1}).limit(50000)
 
 
 def killshit(text):
     temp = text.split(' ')
     ans = ""
     for i in range (len(temp)):
-        if len(temp[i]) > 3 and len(temp[i]) < 21:
+        if len(temp[i]) > 4 and len(temp[i]) < 21:
             ans += temp[i]
             ans += ' '
     return ans
@@ -25,6 +25,9 @@ def get_bag_of_the_words(text):
     tokens = tokenizer.tokenize(text)
     tokens_stemmed = [stemmer.stem(token) for token in tokens]
     return Counter(tokens_stemmed)
+
+d = {}
+
 for p in people_goal:
         t = p['status']
         t += ' '
@@ -48,8 +51,18 @@ for p in people_goal:
         if 'quotes' in p.keys():
             t += p['quotes']
         t += ' '
+
         t = delete.sub(' ', t).strip()
+
         freq = get_bag_of_the_words(killshit(t))
-        for token, freq in freq.most_common()[:3]:
-            print (token + "\t" + str(freq))
-        print '------------'
+
+        for token, freq in freq.most_common()[:1]:
+            #token = token.encode('ascii')
+            if token in d.keys():
+                d[token] += int(freq)
+            else:
+                d[token] = int(freq)
+print max(d, key = d.get)
+
+for w in sorted(d, key = d.get, reverse = True)[:100]:
+    print w, d[w]
