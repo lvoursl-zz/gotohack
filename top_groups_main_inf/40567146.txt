@@ -1,0 +1,3 @@
+Future students - 1 000 000
+Male - 400 000
+Female - 600 000
