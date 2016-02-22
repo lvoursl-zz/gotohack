@@ -64,5 +64,5 @@ for p in people_goal:
                 d[token] = int(freq)
 print max(d, key = d.get)
 
-for w in sorted(d, key = d.get, reverse = True)[:100]:
+for w in sorted(d, key = d.get, reverse = True)[:40]:
     print w, d[w]
