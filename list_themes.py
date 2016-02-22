@@ -1,10 +1,17 @@
 import json
 import nltk
 import re
+import pymongo
 from nltk.tokenize import RegexpTokenizer
 from nltk.stem.snowball import RussianStemmer
 from nltk.tokenize import wordpunct_tokenize
 from collections import Counter
+
+client = pymongo.MongoClient('goto.reproducible.work')
+db = client['vk_bukin']
+users = db.['users']
+
+users.find({'id' : '1'})
 
 stemmer = RussianStemmer()
 people_goal = db['users'].find({'sex': 1}).limit(50000)
