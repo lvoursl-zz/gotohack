@@ -12,7 +12,7 @@ for group in groups_file:
 
 print('File parsing ends')
 
-for group in groups_list[:2]:
+for group in groups_list[:1]:
 	#posts_list - лист идшников последних 100 постов группы group
 
 	users_ids_file = tuple(open('membership/' + str(group), 'r+'))

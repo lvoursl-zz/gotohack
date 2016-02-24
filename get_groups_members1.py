@@ -20,7 +20,7 @@ print('File parsing ends')
 membership_counter = open('counted/membership_counter', 'w+')
 
 # group - ид группы
-for group in groups_list[10:]:
+for group in groups_list[11:]:
 	group_members = ""
 	members_counter = 0
 	group_file = open('membership/' + str(group), 'w+')
@@ -28,6 +28,7 @@ for group in groups_list[10:]:
 	print('I am counting group: ' + str(group))
 	counter = 0
 	for user_id in users_ids:
+		try:
 			counter += 1
 			request = urlopen('https://api.vk.com/method/groups.isMember?group_id=' + str(group) + '&' + 'user_id=' + str(user_id))
 			data = eval(request.read())	
@@ -40,6 +41,14 @@ for group in groups_list[10:]:
 			if (counter % 100 == 0): 
 				print('Counter = ' + str(counter))
 				sleep(0.2)
+
+
+			print(user_id, file = group_file)
+
+			print(str(members_counter), file = membership_counter)
+
+		except Exception as e:
+			print(e)
 
 	print(group_members, file = group_file)
 

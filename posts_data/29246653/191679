@@ -1,1 +1,1 @@
-[{'to_id': -29246653, 'id': 191679, 'from_id': -29246653, 'comments': {'count': 0}, 'post_type': 'post', 'reposts': {'count': 762}, 'likes': {'count': 6918}, 'date': 1455970621, 'text': 'Боже мой, как всё лень.'}]
+[{'to_id': -29246653, 'from_id': -29246653, 'text': 'Боже мой, как всё лень.', 'date': 1455970621, 'reposts': {'count': 785}, 'likes': {'count': 7559}, 'post_type': 'post', 'id': 191679, 'comments': {'count': 0}}]
